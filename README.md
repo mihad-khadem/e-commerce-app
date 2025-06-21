@@ -2,6 +2,8 @@
 
 A full-stack e-commerce application for managing users, products, orders, and payments. Built with a monolithic architecture, it features user authentication, product catalog, order processing, and Stripe payment integration.
 
+## [Entity-Relationship Diagram (ERD)] (https://app.eraser.io/workspace/cU3kEOD1xZslxF0JfYB6?origin=share)
+
 ## Features
 - User registration/login with customer/admin roles
 - Manage multiple shipping/billing addresses
@@ -41,22 +43,27 @@ A full-stack e-commerce application for managing users, products, orders, and pa
 
 ## File Structure
 
-├── backend
-│   ├── src
-│   │   ├── controllers
-│   │   ├── routes
-│   │   ├── services
-│   │   ├── models (Prisma schema)
-│   │   ├── utils
-│   │   └── app.ts
-├── frontend (Next.js)
-│   ├── app
-│   ├── components
-│   ├── lib
-│   ├── hooks
-│   ├── store
-│   ├── styles
-│   └── utils
+- **backend**: Express.js backend with TypeScript
+  - **src**: Source code
+    - `controllers`: API logic and request handlers
+    - `routes`: API route definitions
+    - `services`: Business logic and external integrations
+    - `models`: Prisma schema for database models
+    - `utils`: Helper functions and utilities
+    - `app.ts`: Main application entry point
+- **frontend**: Next.js frontend
+  - `app`: Next.js app directory for routing
+  - `components`: Reusable React components
+  - `lib`: API clients and utility libraries
+  - `hooks`: Custom React hooks
+  - `store`: Zustand state management
+  - `styles`: Tailwind CSS and global styles
+  - `utils`: Frontend helper functions
+
+### Description
+- **backend/src**: Contains backend logic, with controllers for APIs, services for business logic, and Prisma models for database.
+- **frontend/app**: Handles Next.js routing and page rendering.
+- **frontend/components**: UI components styled with Tailwind CSS.
 
 
 ## Database Schema
