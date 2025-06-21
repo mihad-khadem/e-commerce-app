@@ -2,7 +2,7 @@
 
 A full-stack e-commerce application for managing users, products, orders, and payments. Built with a monolithic architecture, it features user authentication, product catalog, order processing, and Stripe payment integration.
 
-## [Entity-Relationship Diagram (ERD)] (https://app.eraser.io/workspace/cU3kEOD1xZslxF0JfYB6?origin=share)
+## [Entity-Relationship Diagram (ERD)](https://app.eraser.io/workspace/cU3kEOD1xZslxF0JfYB6?origin=share)
 
 ## Features
 - User registration/login with customer/admin roles
