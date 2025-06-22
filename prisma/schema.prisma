@@ -1,0 +1,103 @@
+// prisma/schema.prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id         String    @id @default(uuid())
+  name       String
+  email      String    @unique
+  password   String
+  role       Role      @default(customer)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  isDeleted  Boolean   @default(false)
+  addresses  Address[] // One-to-Many: User has many Addresses
+  orders     Order[]   // One-to-Many: User has many Orders
+}
+
+enum Role {
+  customer
+  admin
+}
+
+model Address {
+  id          String       @id @default(uuid())
+  user_id     String
+  type        AddressType
+  street      String
+  city        String
+  postal_code String
+  country     String
+  user        User         @relation(fields: [user_id], references: [id]) // Many-to-One: Address belongs to User
+}
+
+enum AddressType {
+  shipping
+  billing
+}
+
+model Product {
+  id           String       @id @default(uuid())
+  title        String
+  description  String
+  price        Decimal
+  stock        Int
+  category_id  String
+  image_url    String
+  category     Category     @relation(fields: [category_id], references: [id]) // Many-to-One: Product belongs to Category
+  orderItems   OrderItems[] // One-to-Many: Product has many OrderItems
+}
+
+model Category {
+  id       String    @id @default(uuid())
+  name     String
+  products Product[] // One-to-Many: Category has many Products
+}
+
+model Order {
+  id           String       @id @default(uuid())
+  user_id      String
+  status       OrderStatus
+  total_amount Decimal
+  created_at   DateTime     @default(now())
+  user         User         @relation(fields: [user_id], references: [id]) // Many-to-One: Order belongs to User
+  orderItems   OrderItems[] // One-to-Many: Order has many OrderItems
+  payment      Payment?     // One-to-One: Order has one Payment (optional)
+}
+
+enum OrderStatus {
+  pending
+  paid
+  shipped
+}
+
+model OrderItems {
+  id         String  @id @default(uuid())
+  order_id   String
+  product_id String
+  quantity   Int
+  price      Decimal
+  order      Order   @relation(fields: [order_id], references: [id])   // Many-to-One: OrderItem belongs to Order
+  product    Product @relation(fields: [product_id], references: [id]) // Many-to-One: OrderItem references Product
+}
+
+model Payment {
+  id               String      @id @default(uuid())
+  order_id         String      @unique
+  stripe_payment_id String
+  amount           Decimal
+  status           PaymentStatus
+  created_at       DateTime    @default(now())
+  order            Order       @relation(fields: [order_id], references: [id]) // One-to-One: Payment belongs to Order
+}
+
+enum PaymentStatus {
+  succeeded
+  failed
+}
